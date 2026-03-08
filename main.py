@@ -8,7 +8,7 @@ from .utils import generate_password, get_current_slot, get_beijing_time
 from .config import PluginConfig
 
 class DynamicPasswordPlugin(Star):
-    def __init__(self, context: Context, config: AstrBotConfig):
+    def __init__(self, context: Context, config: dict):
         super().__init__(context)
         self.config = PluginConfig(config)
         self.admins = [str(i) for i in config.get("admins_id", [])]

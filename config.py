@@ -1,3 +1,5 @@
+from typing import Any
+
 from astrbot.core import AstrBotConfig
 
 class PluginConfig:
@@ -9,7 +11,7 @@ class PluginConfig:
         groups = self._config.get("groups", {})
         return groups.get(str(group_id), {})
 
-    def set_group_config(self, group_id: str, key: str, value: any):
+    def set_group_config(self, group_id: str, key: str, value: Any):
         """设置指定群组的配置"""
         groups = self._config.get("groups", {})
         if str(group_id) not in groups:
