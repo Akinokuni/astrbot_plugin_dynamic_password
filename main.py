@@ -8,10 +8,11 @@ from .utils import generate_password, get_current_slot, get_beijing_time
 from .config import PluginConfig
 
 class DynamicPasswordPlugin(Star):
-    def __init__(self, context: Context):
+    def __init__(self, context: Context, config: AstrBotConfig | None = None):
         super().__init__(context)
-        self.config = PluginConfig(context.config)
-        self.admins = [str(i) for i in context.config.get("admins_id", [])]
+        cfg = config if config is not None else context.config
+        self.config = PluginConfig(cfg)
+        self.admins = [str(i) for i in cfg.get("admins_id", [])]
 
     @filter.command("加群密码")
     async def get_password(self, event: AiocqhttpMessageEvent, group_id: str = None):
