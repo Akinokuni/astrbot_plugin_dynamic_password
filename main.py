@@ -1,13 +1,14 @@
 from datetime import datetime, timedelta
 from typing import Any, Optional
 from astrbot.api.event import filter
-from astrbot.api.star import Context, Star
+from astrbot.api.star import Context, Star, register
 from astrbot.core import AstrBotConfig
 from astrbot.core.platform.sources.aiocqhttp.aiocqhttp_message_event import AiocqhttpMessageEvent
 from astrbot.api import logger
 from .utils import generate_password, get_current_slot, get_beijing_time
 from .config import PluginConfig
 
+@register("astrbot_plugin_dynamic_password", "Aki_BG7ZGA", "动态入群密码插件", "0.1.1")
 class DynamicPasswordPlugin(Star):
     def __init__(
         self,
@@ -17,7 +18,9 @@ class DynamicPasswordPlugin(Star):
         **kwargs: Any,
     ):
         super().__init__(context)
-        cfg = config or kwargs.get("config") or context.config
+        cfg = config or kwargs.get("config") or getattr(context, "config", None)
+        if cfg is None:
+            raise RuntimeError("AstrBot config is unavailable during plugin initialization.")
         self.config = PluginConfig(cfg)
         self.admins = [str(i) for i in cfg.get("admins_id", [])]
 
