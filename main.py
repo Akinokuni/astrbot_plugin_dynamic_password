@@ -18,7 +18,12 @@ class DynamicPasswordPlugin(Star):
         **kwargs: Any,
     ):
         super().__init__(context)
-        cfg = config or kwargs.get("config") or getattr(context, "config", None)
+        cfg = (
+            config
+            or kwargs.get("config")
+            or getattr(context, "config", None)
+            or getattr(context, "_config", None)
+        )
         if cfg is None:
             raise RuntimeError("AstrBot config is unavailable during plugin initialization.")
         self.config = PluginConfig(cfg)
