@@ -1,4 +1,5 @@
 from datetime import datetime, timedelta
+from typing import Any, Optional
 from astrbot.api.event import filter
 from astrbot.api.star import Context, Star
 from astrbot.core import AstrBotConfig
@@ -8,9 +9,15 @@ from .utils import generate_password, get_current_slot, get_beijing_time
 from .config import PluginConfig
 
 class DynamicPasswordPlugin(Star):
-    def __init__(self, context: Context, config: AstrBotConfig | None = None):
+    def __init__(
+        self,
+        context: Context,
+        config: Optional[AstrBotConfig] = None,
+        *args: Any,
+        **kwargs: Any,
+    ):
         super().__init__(context)
-        cfg = config if config is not None else context.config
+        cfg = config or kwargs.get("config") or context.config
         self.config = PluginConfig(cfg)
         self.admins = [str(i) for i in cfg.get("admins_id", [])]
 
