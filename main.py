@@ -8,10 +8,10 @@ from .utils import generate_password, get_current_slot, get_beijing_time
 from .config import PluginConfig
 
 class DynamicPasswordPlugin(Star):
-    def __init__(self, context: Context, config: dict):
+    def __init__(self, context: Context):
         super().__init__(context)
-        self.config = PluginConfig(config)
-        self.admins = [str(i) for i in config.get("admins_id", [])]
+        self.config = PluginConfig(context.config)
+        self.admins = [str(i) for i in context.config.get("admins_id", [])]
 
     @filter.command("加群密码")
     async def get_password(self, event: AiocqhttpMessageEvent, group_id: str = None):
