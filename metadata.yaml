@@ -1,0 +1,5 @@
+name: astrbot_plugin_dynamic_password
+version: 0.1.0
+author: Aki_BG7ZGA
+desc: 动态入群密码插件，基于半天时间步长生成一次性入群密码，有效阻断外部死链与密码倒卖。
+pypi_deps: []
